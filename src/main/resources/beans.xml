@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--    <context:component-scan base-package="com.example"/>-->
+
+    <bean id="greeting1" class="com.example.Greeting">
+    </bean>
+
+    <bean id="greeting2" class="com.example.Greeting">
+    </bean>
+
+    <bean id="employee" class="com.example.Employee" >
+        <property name="name" value="Empleado 1"/>
+        <property name="age" value="30"/>
+    </bean>
+
+    <bean id="employee2" class="com.example.Employee">
+        <constructor-arg name="name" value="Empleado 2"/>
+        <constructor-arg name="age" value="30"/>
+    </bean>
+
+    <bean id="honda" class="com.example.Car">
+        <property name="manufacturer" value="Honda"/>
+    </bean>
+
+    <bean id="customer" class="com.example.Customer">
+        <constructor-arg name="name" value="Customer"/>
+        <constructor-arg name="car" ref="honda"/>
+    </bean>
+
+    <bean id="customerDAOJdbc" class="com.example.dao.CustomerDAOJdbcImpl"/>
+<!--    <bean id="customerDAOJpa" class="com.example.dao.CustomerDAOJpaImpl" scope="prototype"/>-->
+<!--    Por defecto el scope es singleton, significa que se genera un solo objeto y se reutiliza-->
+    <bean id="customerDAOJpa" class="com.example.dao.CustomerDAOJpaImpl"/>
+
+    <bean id="customerService" class="com.example.dao.CustomerService">
+<!--        <constructor-arg name="customerDAO" ref="customerDAOJdbc"/>-->
+        <constructor-arg name="customerDAO" ref="customerDAOJpa"/>
+    </bean>
+
+    <bean id="accountService" class="com.example.dao.AccountService">
+        <constructor-arg name="customerDAO" ref="customerDAOJpa"/>
+    </bean>
+
+    <bean id="helloWorldString" class="java.lang.String">
+        <constructor-arg value="Hola mundo!"/>
+    </bean>
+</beans>
